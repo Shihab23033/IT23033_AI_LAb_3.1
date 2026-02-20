@@ -1,6 +1,6 @@
 import copy
 import heapq
-
+N=3
 class p8_board:
     def __init__(self,board,x,y,depth,parent=None,h=0):
         self.board=board
@@ -13,19 +13,25 @@ class p8_board:
     def __lt__(self,other):
         return self.h<other.h
 
-row=[0,0,-1,1]
-col=[-1,1,0,0]
+moves=[(0,1),(0,-1),(1,0),(-1,0)]
 goal=[[1,2,3],[4,5,6],[7,8,0]]
 
 def manhattan(board):
-    distance=0
-    for i in range(3):
-        for j in range(3):
-            if board[i][j]!=0:
-                gx=(board[i][j]-1)//3
-                gy=(board[i][j]-1)%3
-                distance+=abs(i-gx)+abs(j-gy)
-    return distance
+  dist = 0
+  for i in range(N):
+    for j in range(N):
+      val = board[i][j]
+      if val != 0:
+        f=1
+        for row in range(N):
+          for col in range(N):
+            if val==goal[row][col]:
+              dist += abs(i - row) + abs(j - col)
+              f=0
+              break
+          if f==0:
+            break
+  return dist
 
 def is_goal(board):
     return goal==board
@@ -48,9 +54,9 @@ def best(start_board,x,y):
             print("solution found")
             prints(current)
             return 
-        for i in range(4):
-            new_x=current.x+row[i]
-            new_y=current.y+col[i]
+        for x,y in moves:
+            new_x=current.x+x
+            new_y=current.y+y
             if is_valid(new_x,new_y):
                 new_board=copy.deepcopy(current.board)
                 new_board[current.x][current.y],new_board[new_x][new_y]=\

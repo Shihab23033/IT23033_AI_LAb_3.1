@@ -9,8 +9,6 @@ class p8_board:
         self.depth=depth
         self.parent=parent
 
-row=[0,0,-1,1]
-col=[-1,1,0,0]
 moves=[(0,1),(0,-1),(1,0),(-1,0)]
 
 def is_valid(x,y):

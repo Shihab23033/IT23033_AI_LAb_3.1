@@ -15,24 +15,30 @@ class p8_board:
     def __lt__(self, other):
         return self.cost < other.cost
 
-row_moves = [0, 0, -1, 1]
-col_moves = [-1, 1, 0, 0]
-
+moves=[(0,1),(0,-1),(1,0),(-1,0)]
+goal = [[1, 2, 3], [4, 5, 6], [7, 8, 0]] 
 def is_valid(x, y):
     return 0 <= x < N and 0 <= y < N
 
 def is_goal(board):
-    return board == [[1,2,3],[4,5,6],[7,8,0]]
+    return board == goal
 
 def heuristic(board):
-    h = 0
-    for i in range(N):
-        for j in range(N):
-            if board[i][j] != 0:
-                gx = (board[i][j] - 1) // N
-                gy = (board[i][j] - 1) % N
-                h += abs(i - gx) + abs(j - gy)
-    return h
+  dist = 0
+  for i in range(N):
+    for j in range(N):
+      val = board[i][j]
+      if val != 0:
+        f=1
+        for row in range(N):
+          for col in range(N):
+            if val==goal[row][col]:
+              dist += abs(i - row) + abs(j - col)
+              f=0
+              break
+          if f==0:
+            break
+  return dist
 
 def aostar(start_board, x, y):
     pq = []
@@ -51,8 +57,8 @@ def aostar(start_board, x, y):
         visited.add(tuple(map(tuple, current.board)))
         children = []
         for i in range(4):
-            nx = current.x + row_moves[i]
-            ny = current.y + col_moves[i]
+            nx = current.x + x
+            ny = current.y + y
             if is_valid(nx, ny):
                 new_board = copy.deepcopy(current.board)
                 new_board[current.x][current.y], new_board[nx][ny] = \

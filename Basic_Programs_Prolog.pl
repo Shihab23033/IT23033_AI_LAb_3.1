@@ -1,25 +1,25 @@
 %1.Relationship
 
-male(rahim).
-male(karim).
+male(Rakib).
+male(Kabir).
 male(jamal).
-male(arif).
+male(Alif).
 
-female(amina).
+female(Sumaiya).
 female(salma).
 female(nasrin).
 female(mitu).
 
-father(rahim, jamal).
-mother(amina, jamal).
+father(Rakib, jamal).
+mother(Sumaiya, jamal).
 
-father(rahim, nasrin).
-mother(amina, nasrin).
+father(Rakib, nasrin).
+mother(Sumaiya, nasrin).
 
-father(jamal, arif).
+father(jamal, Alif).
 mother(nasrin, mitu).
 
-father(karim, mitu).
+father(Kabir, mitu).
 mother(salma, mitu).
 
 parent(X, Y) :- father(X, Y).
@@ -37,12 +37,12 @@ grandparent(X, Y) :-
 
 %2.Like-Dislike:
 
-likes(rahim, tea).
-likes(rahim, football).
-likes(karim, coffee).
+likes(Rakib, tea).
+likes(Rakib, football).
+likes(Kabir, coffee).
 
-dislikes(rahim, smoking).
-dislikes(karim, tea).
+dislikes(Rakib, smoking).
+dislikes(Kabir, tea).
 
 friend(X, Y) :-
     likes(X, Z),

@@ -10,26 +10,30 @@ class p8_board:
         self.depth = depth
         self.parent = parent
 
-row_moves = [0, 0, -1, 1]
-col_moves = [-1, 1, 0, 0]
-
+moves=[(0,1),(0,-1),(1,0),(-1,0)]
+goal = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
 def is_valid(x, y):
     return 0 <= x < N and 0 <= y < N
 
 def is_goal(board):
-    goal = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
     return goal == board
 
 def heuristic(board):
-    h = 0
-    for i in range(3):
-        for j in range(3):
-            val = board[i][j]
-            if val != 0:
-                gx = (val - 1) // 3
-                gy = (val - 1) % 3
-                h += abs(i - gx) + abs(j - gy)
-    return h
+  dist = 0
+  for i in range(N):
+    for j in range(N):
+      val = board[i][j]
+      if val != 0:
+        f=1
+        for row in range(N):
+          for col in range(N):
+            if val==goal[row][col]:
+              dist += abs(i - row) + abs(j - col)
+              f=0
+              break
+          if f==0:
+            break
+  return dist
 
 def hill_climbing(start_board, x, y):
     current = p8_board(start_board, x, y)
@@ -43,9 +47,9 @@ def hill_climbing(start_board, x, y):
 
         neighbors = []
 
-        for i in range(4):
-            new_x = current.x + row_moves[i]
-            new_y = current.y + col_moves[i]
+        for x,y in moves:
+            new_x=current.x+x
+            new_y=current.y+y
 
             if is_valid(new_x, new_y):
                 new_board = copy.deepcopy(current.board)
