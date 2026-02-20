@@ -11,6 +11,7 @@ class p8_board:
 
 row=[0,0,-1,1]
 col=[-1,1,0,0]
+moves=[(0,1),(0,-1),(1,0),(-1,0)]
 
 def is_valid(x,y):
     return 0<=x<3 and 0<=y<3
@@ -32,9 +33,9 @@ def bfs_solve(start_board,x,y):
             print("solution found")
             prints(current)
             return
-        for i in range(4):
-            new_x=current.x+row[i]
-            new_y=current.y+col[i]
+        for x,y in moves:
+            new_x=current.x+x
+            new_y=current.y+y
             if is_valid(new_x,new_y):
                 new_board=copy.deepcopy(current.board)
                 new_board[current.x][current.y],new_board[new_x][new_y]=\
